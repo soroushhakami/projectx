@@ -2,11 +2,40 @@
 <head>
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 </head>
-{{#if user}}
-<h2>Hello, {{user.username}}</h2>
-{{else}}
-<h2>Welcome! Please log in.</h2>
-<a href="/auth/facebook">Login with Facebook</a>
-{{/if}}
+
+
+<body>
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/account">Account</a></li>
+          <li><a href="/logout">Logout</a></li>
+      </ul>
+      <h3 class="muted">Project X</h3>
+  </div>
+
+  <hr>
+
+  <div class="jumbotron">
+    <h1>Are you ready for Project X?</h1>
+    <p class="lead">Whatever you thought you knew about mayhem - throw it out the door. To be a part of this top secret, life-changing event, sign up below.</p>
+    {{#if user}}
+    <h2>{{user.displayName}} is ready.</h2>
+    {{else}}
+    <a class="btn btn-large btn-success" href="/auth/facebook">Sign up with Facebook</a>
+    {{/if}}
+</div>
+
+<hr>
+
+<div class="footer">
+    <p>&copy; Project X 2013</p>
+</div>
+
+</div>
+</body>
 

@@ -4,23 +4,19 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path')
-  , port = 8080
-  , url  = 'http://localhost:' + port + '/';
-/* We can access nodejitsu enviroment variables from process.env */
-/* Note: the SUBDOMAIN variable will always be defined for a nodejitsu app */
-if(process.env.SUBDOMAIN){
-  url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
-}
+ var express = require('express')
+ , routes = require('./routes')
+ , user = require('./routes/user')
+ , http = require('http')
+ , path = require('path')
+ , passport = require('passport')
+ , FacebookStrategy = require('passport-facebook').Strategy
+ , config = require('./config');
 
-var app = express();
+ var app = express();
 
-app.configure(function(){
-  app.set('port', process.env.PORT || port);
+ app.configure(function(){
+  app.set('port', process.env.PORT || config.port);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
   app.use(express.favicon());
@@ -33,14 +29,13 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.configure('development', function(){
+ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+ app.get('/', routes.index);
+ app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
+ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
-  console.log(url);
 });

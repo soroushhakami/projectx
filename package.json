@@ -13,7 +13,8 @@
     "express": "3.0.x",
     "hbs": "*",
     "mocha": "*",
-    "passport": "*"
+    "passport": "*",
+    "passport-facebook" :"*"
   },
   "analyze": false,
   "readme": "durrrr",

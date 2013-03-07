@@ -17,5 +17,9 @@
   "description": "[http://expressjs.com](http://express.js.com)",
   "dist": {
     "shasum": "0c8c4a31190bb47fe93d5f6401e9db137b274910"
+  },
+  "subdomain": "soroush.projectx",
+  "engines": {
+    "node": "0.8.x"
   }
 }

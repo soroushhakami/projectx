@@ -1,10 +1,10 @@
 {
-  "name": "projectx",
+  "name": "nodeapps-express",
   "author": {
     "name": "Nodejitsu Inc.",
     "email": "support@nodejitsu.com"
   },
-  "version": "0.1.3",
+  "version": "0.1.3-2",
   "scripts": {
     "start": "node app.js"
   },

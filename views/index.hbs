@@ -25,6 +25,7 @@
     <p class="lead">Whatever you thought you knew about mayhem - throw it out the door. To be a part of this top secret, life-changing event, sign up below.</p>
     {{#if user}}
     <h2>{{user.displayName}} is ready.</h2>
+    <img src="https://graph.facebook.com/{{user.username}}/picture?width=200&height=200" class="img-circle">
     {{else}}
     <a class="btn btn-large btn-success" href="/auth/facebook">Sign up with Facebook</a>
     {{/if}}

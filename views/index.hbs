@@ -3,5 +3,10 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<div>Hello {{title}}!</div>
-            
+{{#if user}}
+<h2>Hello, {{user.username}}</h2>
+{{else}}
+<h2>Welcome! Please log in.</h2>
+<a href="/auth/facebook">Login with Facebook</a>
+{{/if}}
+

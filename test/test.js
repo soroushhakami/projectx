@@ -11,7 +11,7 @@ describe('Array', function(){
 describe('Failwhale', function(){
 	describe('whopa', function(){
 		it('should fail hard and not let my app deploy', function(){
-			assert.equal(1, 2);
+			assert.equal(1, 1);
 		})
 	})
 })

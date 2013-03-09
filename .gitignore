@@ -7,6 +7,8 @@ lib-cov
 *.pid
 *.gz
 
+start-dev.sh
+
 pids
 logs
 results

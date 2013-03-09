@@ -11,7 +11,7 @@
  , passport = require('passport')
  , FacebookStrategy = require('passport-facebook').Strategy
  , env = process.env.NODE_ENV || 'development'
- , config = require('./config.' + env)
+ , config = require('./config')
  , url  = 'http://localhost:' + config.port + '/';
 
  if(process.env.SUBDOMAIN){

@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         src: ['client/src/js/*.js'],
-        dest:['uild.js']
+        dest:['build.js']
       }
     },
     jshint: {
@@ -21,20 +21,16 @@ module.exports = function(grunt) {
     },
     less: {
       development: {
-        options: {
-          paths: ['client/src/stylesheets']
-        },
         files: {
-          'client/src/stylesheets/main.css': 'client/src/stylesheets/main.less'
+          'client/src/stylesheets/main.css': 'client/src/stylesheets/*.less'
         }
       },
       production: {
         options: {
-          paths: ['client/src/stylesheets'],
           yuicompress: true
         },
         files: {
-          'client/dist/stylesheets/main.css': 'client/src/stylesheets/main.less'
+          'client/dist/stylesheets/main.css': 'client/src/stylesheets/*.less'
         }
       }
     }

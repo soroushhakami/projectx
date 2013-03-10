@@ -33,6 +33,12 @@ module.exports = function(grunt) {
           'client/dist/stylesheets/main.css': 'client/src/stylesheets/*.less'
         }
       }
+    },
+    watch: {
+      scripts: {
+        files: ['client/src/js/*.js', 'client/src/stylesheets/*.less'],
+        tasks: ['jshint', 'less']
+      }
     }
   });
 
@@ -40,6 +46,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-closure-compiler');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
 
   // Default task(s).

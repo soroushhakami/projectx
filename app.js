@@ -9,7 +9,7 @@
  , http = require('http')
  , path = require('path')
  , passport = require('passport')
- , FacebookStrategy = require('passport-facebook').Strategy
+ , LocalStrategy = require('passport-local').Strategy
  , env = process.env.NODE_ENV || 'development'
  , config = require('./config')
  , url  = 'http://localhost:' + config.port + '/';
@@ -18,23 +18,56 @@
   url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
 }
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
+var users = [
+{ id: 1, username: 'avanzapension', password: 'test', email: 'soroush.hakami@gmail.com' }
+, { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
+];
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-passport.use(new FacebookStrategy({
-  clientID: config.FACEBOOK_APP_ID,
-  clientSecret: config.FACEBOOK_APP_SECRET,
-  callbackURL: url + 'auth/facebook/callback'
-},
-function(accessToken, refreshToken, profile, done) {
-  return done(null, profile);
+function findById(id, fn) {
+  var idx = id - 1;
+  if (users[idx]) {
+    fn(null, users[idx]);
+  } else {
+    fn(new Error('User ' + id + ' does not exist'));
+  }
 }
-));
+
+function findByUsername(username, fn) {
+  for (var i = 0, len = users.length; i < len; i++) {
+    var user = users[i];
+    if (user.username === username) {
+      return fn(null, user);
+    }
+  }
+  return fn(null, null);
+}
+
+
+// Passport session setup.
+//   To support persistent login sessions, Passport needs to be able to
+//   serialize users into and deserialize users out of the session.  Typically,
+//   this will be as simple as storing the user ID when serializing, and finding
+//   the user by ID when deserializing.
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    findByUsername(username, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+      if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+      return done(null, user);
+    })
+  }
+  ));
 
 var app = express();
 
@@ -64,16 +97,11 @@ app.get('/account', ensureAuthenticated, routes.account);
 
 app.get('/login', routes.login);
 
-app.get('/auth/facebook',
-  passport.authenticate('facebook'),
-  function(req, res){
-    // The request will be redirected to Facebook for authentication, so this
-    // function will not be called.
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
   });
-
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  routes.successRedirect);
 
 app.get('/logout', routes.logout);
 

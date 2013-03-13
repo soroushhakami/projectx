@@ -1,42 +1,53 @@
 <!doctype html>
 <head>
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheets/main.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/stylesheets/main.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 </head>
 
 
 <body>
-    <div class="container-narrow">
+  <div class="container-narrow">
 
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/account">Account</a></li>
-          <li><a href="/logout">Logout</a></li>
+    <div class="masthead">
+      <ul class="nav nav-pills pull-right">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/logout">Logout</a></li>
       </ul>
       <h3 class="muted">Project X</h3>
+    </div>
+
+    <hr>
+
+    <div class="jumbotron">
+      <h1>Are you ready for Project X?</h1>
+      <p class="lead">Whatever you thought you knew about mayhem - throw it out the door. To be a part of this top secret, life-changing event, sign up below.</p>
+      {{#if user}}
+      <h2>Logged in</h2>
+      {{else}}
+      <form action="/login" method="post">
+        <div>
+          <label>Username:</label>
+          <input type="text" name="username"/><br/>
+        </div>
+        <div>
+          <label>Password:</label>
+          <input type="password" name="password"/>
+        </div>
+        <div>
+          <input class="btn btn-large btn-success" type="submit" value="Login"/>
+        </div>
+      </form>
+      {{/if}}
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>&copy; Project X 2013</p>
+    </div>
+
   </div>
-
-  <hr>
-
-  <div class="jumbotron">
-    <h1>Are you ready for Project X?</h1>
-    <p class="lead">Whatever you thought you knew about mayhem - throw it out the door. To be a part of this top secret, life-changing event, sign up below.</p>
-    {{#if user}}
-    <h2>{{user.displayName}} is ready.</h2>
-    <img src="https://graph.facebook.com/{{user.username}}/picture?width=200&height=200" class="img-circle">
-    {{else}}
-    <a class="btn btn-large btn-success" href="/auth/facebook">Sign up with Facebook</a>
-    {{/if}}
-</div>
-
-<hr>
-
-<div class="footer">
-    <p>&copy; Project X 2013</p>
-</div>
-
-</div>
 </body>
 

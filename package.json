@@ -14,7 +14,8 @@
     "hbs": "*",
     "mocha": "*",
     "passport": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "passport-local": "~0.1.6"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

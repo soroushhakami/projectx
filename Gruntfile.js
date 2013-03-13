@@ -5,19 +5,13 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       build: {
-        src: ['client/src/js/*.js'],
-        dest:['build.js']
+        files: {
+            'client/dist/js/build.js': ['client/src/js/*.js']
+        }
       }
     },
     jshint: {
-      all: ['Gruntfile.js', 'client/**/**/*.js']
-    },
-    'closure-compiler': {
-      closurePath: '/Users/soroushhakami/dev/lib',
-      frontend: {
-        js: ['client/src/js/*.js'],
-        jsOutputFile: ['build.js']
-      }
+      all: ['Gruntfile.js', 'client/src/**/*.js']
     },
     less: {
       development: {
@@ -44,12 +38,11 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-closure-compiler');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'less']);
+  grunt.registerTask('default', ['jshint', 'less', 'uglify']);
 
 };

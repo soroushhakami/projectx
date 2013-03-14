@@ -4,24 +4,33 @@
  * Module dependencies.
  */
 
- var express = require('express')
- , routes = require('./routes')
- , http = require('http')
- , path = require('path')
- , passport = require('passport')
- , LocalStrategy = require('passport-local').Strategy
- , env = process.env.NODE_ENV || 'development'
- , config = require('./config')
- , url  = 'http://localhost:' + config.port + '/';
+var express = require('express'),
+  routes = require('./routes'),
+  http = require('http'),
+  fs = require('fs'),
+  path = require('path'),
+  passport = require('passport'),
+  hbs = require('hbs');
+LocalStrategy = require('passport-local').Strategy,
+env = process.env.NODE_ENV || 'development',
+config = require('./config'),
+url = 'http://localhost:' + config.port + '/';
 
- if(process.env.SUBDOMAIN){
+if (process.env.SUBDOMAIN) {
   url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
 }
 
-var users = [
-{ id: 1, username: 'avanzapension', password: 'test', email: 'soroush.hakami@gmail.com' }
-, { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
-];
+var users = [{
+  id: 1,
+  username: 'avanzapension',
+  password: 'test',
+  email: 'soroush.hakami@gmail.com'
+}, {
+  id: 2,
+  username: 'joe',
+  password: 'birthday',
+  email: 'joe@example.com'
+}];
 
 function findById(id, fn) {
   var idx = id - 1;
@@ -53,25 +62,35 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  findById(id, function (err, user) {
+  findById(id, function(err, user) {
     done(err, user);
   });
 });
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    findByUsername(username, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-      if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-      return done(null, user);
-    })
-  }
-  ));
+
+function(username, password, done) {
+  findByUsername(username, function(err, user) {
+    if (err) {
+      return done(err);
+    }
+    if (!user) {
+      return done(null, false, {
+        message: 'Unknown user ' + username
+      });
+    }
+    if (user.password != password) {
+      return done(null, false, {
+        message: 'Invalid password'
+      });
+    }
+    return done(null, user);
+  });
+}));
 
 var app = express();
 
-app.configure(function(){
+app.configure(function() {
   app.set('port', process.env.PORT || config.port);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
@@ -87,7 +106,7 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, env == 'production' ? 'client/dist' : 'client/src')));
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
@@ -97,20 +116,37 @@ app.get('/account', ensureAuthenticated, routes.account);
 
 app.get('/login', routes.login);
 
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+app.post('/login',
+passport.authenticate('local', {
+  failureRedirect: '/login'
+}), function(req, res) {
+  res.redirect('/');
+});
 
 app.get('/logout', routes.logout);
 
-http.createServer(app).listen(app.get('port'), function(){
+app.get('/work', ensureAuthenticated, routes.work);
+
+var partialsDir = __dirname + '/views/partials';
+var filenames = fs.readdirSync(partialsDir);
+filenames.forEach(function(filename) {
+  var matches = /^([^.]+).hbs$/.exec(filename);
+  if (!matches) {
+    return;
+  }
+  var name = matches[1];
+  var template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
+  hbs.registerPartial(name, template);
+});
+
+http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
   console.log(url);
 });
 
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
 }

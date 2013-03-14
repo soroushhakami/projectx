@@ -1,13 +1,19 @@
-<form action="/login" method="post">
-	<div>
-	<label>Username:</label>
-	<input type="text" name="username"/><br/>
+<!doctype html>
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="/stylesheets/main.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+</head>
+
+
+<body>
+	<div class="container-narrow">
+		{{> menu}}
+		<div class="jumbotron">
+			<h3>Please login first.</h1>
+			{{> loginForm}}
+		</div>
+		{{> footer}}
 	</div>
-	<div>
-	<label>Password:</label>
-	<input type="password" name="password"/>
-	</div>
-	<div>
-	<input type="submit" value="Submit"/>
-	</div>
-</form>
+</body>
+

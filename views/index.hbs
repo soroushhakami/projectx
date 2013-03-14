@@ -9,20 +9,12 @@
 <body>
   <div class="container-narrow">
 
-    <div class="masthead">
-      <ul class="nav nav-pills pull-right">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/account">Account</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
-      <h3 class="muted">Project X</h3>
-    </div>
-
-    <hr>
+    {{>menu}}
 
     <div class="jumbotron">
-      <h1>Are you ready for Project X?</h1>
-      <p class="lead">Whatever you thought you knew about mayhem - throw it out the door. To be a part of this top secret, life-changing event, sign up below.</p>
+      <h1>How do you pair program?</h1>
+      <br/>
+      <p class="lead">Pairmodoro is pair programming and the pomodoro technique combined. Use Pairmodoro to gain control over your work process and gather valuable insights over time. </p>
       {{#if user}}
       <h2>Logged in</h2>
       {{else}}
@@ -42,12 +34,8 @@
       {{/if}}
     </div>
 
-    <hr>
-
-    <div class="footer">
-      <p>&copy; Project X 2013</p>
-    </div>
-
+    {{>footer}}
+    
   </div>
 </body>
 

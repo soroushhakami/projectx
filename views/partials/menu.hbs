@@ -1,0 +1,14 @@
+<div class="masthead">
+	<ul class="nav nav-pills pull-right">
+		<li class="active"><a href="/">Home</a></li>
+		<li><a href="/work">Work</a></li>
+		<li><a href="/account">Account</a></li>
+		{{#if user}}
+		<li><a href="/logout">Logout</a></li>
+		{{else}}
+		<li><a href="/login">Login</a></li>
+		{{/if}}
+	</ul>
+	<h3 class="muted"><a class="muted" href="/">Pairmodoro</a></h3>
+</div>
+<hr>

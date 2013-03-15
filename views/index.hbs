@@ -15,27 +15,10 @@
       <h1>How do you pair program?</h1>
       <br/>
       <p class="lead">Pairmodoro is pair programming and the pomodoro technique combined. Use Pairmodoro to gain control over your work process and gather valuable insights over time. </p>
-      {{#if user}}
-      <h2>Logged in</h2>
-      {{else}}
-      <form action="/login" method="post">
-        <div>
-          <label>Username:</label>
-          <input type="text" name="username"/><br/>
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" name="password"/>
-        </div>
-        <div>
-          <input class="btn btn-large btn-success" type="submit" value="Login"/>
-        </div>
-      </form>
-      {{/if}}
+    <button class="btn btn-large btn-success">Create free Team account</button>
     </div>
-
     {{>footer}}
-    
+
   </div>
 </body>
 

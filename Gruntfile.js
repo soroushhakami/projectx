@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      all: ['Gruntfile.js', 'client/src/**/*.js']
+      all: ['Gruntfile.js', 'app.js', 'client/src/**/*.js']
     },
     less: {
       development: {

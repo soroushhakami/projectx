@@ -22,5 +22,7 @@ exports.logout = function(req, res) {
 };
 
 exports.work = function(req, res) {
-	res.render('work');
+	res.render('work', {
+		user: req.user
+	});
 };

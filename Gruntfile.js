@@ -58,8 +58,12 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: ['app.js', 'client/src/js/*.js', 'client/src/stylesheets/*.less'],
-        tasks: ['jshint', 'less', 'uglify']
+        files: ['client/src/js/*.js', 'views/clientside/*.hbs'],
+        tasks: ['jshint', 'handlebars', 'uglify', 'concat']
+      },
+      stylesheets: {
+        files: ['client/src/stylesheets/*.css', 'client/src/stylesheets/*.less'],
+        tasks: ['less', 'cssmin']
       }
     }
   });
@@ -73,5 +77,4 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
 
   grunt.registerTask('default', ['less', 'cssmin', 'jshint', 'handlebars', 'uglify', 'concat']);
-  grunt.registerTask('build', ['jshint', 'less', 'concat', 'handlebars', 'uglify']);
 };

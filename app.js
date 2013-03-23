@@ -124,7 +124,7 @@ app.post('/login',
 passport.authenticate('local', {
   failureRedirect: '/login'
 }), function(req, res) {
-  res.redirect('/');
+  res.redirect('/work');
 });
 
 app.get('/logout', routes.logout);
@@ -142,6 +142,34 @@ filenames.forEach(function(filename) {
   var template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
   hbs.registerPartial(name, template);
 });
+
+hbs.registerHelper('isWork', function(options) {
+    if(this.title == 'Work') {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+hbs.registerHelper('isHome', function(options) {
+    if(this.title == 'Home') {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+hbs.registerHelper('isAccount', function(options) {
+    if(this.title == 'Account') {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });hbs.registerHelper('isLogin', function(options) {
+    if(this.title == 'Login') {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

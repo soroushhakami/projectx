@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         files: {
-          'client/dist/build.js': ['client/src/js/vendor/*.js', 'client/src/js/*.js']
+          'client/src/js/uglified.js': ['client/src/js/!(uglified).js']
         }
       }
     },
@@ -13,25 +13,36 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['client/src/js/vendor/*.js', 'client/src/js/*.js'],
+        src: ['client/src/js/vendor/*.js', 'client/src/js/uglified.js'],
+        dest: 'client/dist/build.js'
+      },
+      src: {
+        src: ['client/src/js/vendor/*.js', 'client/src/js/uglified.js'],
         dest: 'client/src/build.js'
       }
     },
     jshint: {
-      all: ['Gruntfile.js', 'app.js', 'client/src/js/!(templates).js']
+      all: ['*.js', 'client/src/js/!(uglified|templates).js']
     },
     less: {
-      development: {
-        files: {
-          'client/src/stylesheets/main.css': 'client/src/stylesheets/*.less'
-        }
-      },
       production: {
         options: {
           yuicompress: true
         },
         files: {
-          'client/dist/stylesheets/main.css': 'client/src/stylesheets/*.less'
+          'client/src/stylesheets/lesscompiled.css': 'client/src/stylesheets/*.less'
+        }
+      }
+    },
+    cssmin: {
+      dist: {
+        files: {
+          'client/dist/stylesheets/main.css': ['client/src/stylesheets/*.css']
+        }
+      },
+      src: {
+        files: {
+          'client/src/stylesheets/main.css': ['client/src/stylesheets/*.css']
         }
       }
     },
@@ -58,8 +69,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
 
-  grunt.registerTask('default', ['less', 'jshint', 'handlebars', 'concat']);
+  grunt.registerTask('default', ['less', 'cssmin', 'jshint', 'handlebars', 'uglify', 'concat']);
   grunt.registerTask('build', ['jshint', 'less', 'concat', 'handlebars', 'uglify']);
 };

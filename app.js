@@ -13,8 +13,10 @@ var express = require('express'),
   hbs = require('hbs');
 LocalStrategy = require('passport-local').Strategy,
 env = process.env.NODE_ENV || 'development',
-config = require('./config'),
-url = 'http://localhost:' + config.port + '/';
+config = require('./lib/config'),
+url = 'http://localhost:' + config.port + '/',
+userApi = require('./lib/user-api');
+sessionApi = require('./lib/session-api');
 
 if (process.env.SUBDOMAIN) {
   url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
@@ -89,6 +91,8 @@ function(username, password, done) {
 }));
 
 var app = express();
+app.use(userApi);
+app.use(sessionApi);
 
 app.configure(function() {
   app.set('port', process.env.PORT || config.port);

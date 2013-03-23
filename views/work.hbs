@@ -1,16 +1,13 @@
-<!doctype html>
-<head>
-	<title>{{title}}</title>
-	<link rel="stylesheet" href="/stylesheets/main.css">
-	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-</head>
-
-
+{{>head}}
 <body>
 	<div class="container-narrow">
 		{{>menu}}
-		<p>Hello!</p>
+		<div class="container">
+        <div id="main_display">
+        </div>
+    </div>
 		{{>footer}}
 	</div>
+	<script src="/build.js"></script>
 </body>
 

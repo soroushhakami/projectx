@@ -1,17 +1,24 @@
 module.exports = function(grunt) {
-
-  // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       build: {
         files: {
-            'client/dist/js/build.js': ['client/src/js/*.js']
+          'client/dist/build.js': ['client/src/js/vendor/*.js', 'client/src/js/*.js']
         }
       }
     },
+    concat: {
+      options: {
+        separator: ';'
+      },
+      dist: {
+        src: ['client/src/js/vendor/*.js', 'client/src/js/*.js'],
+        dest: 'client/src/build.js'
+      }
+    },
     jshint: {
-      all: ['Gruntfile.js', 'app.js', 'client/src/**/*.js']
+      all: ['Gruntfile.js', 'app.js', 'client/src/js/!(templates).js']
     },
     less: {
       development: {
@@ -28,9 +35,19 @@ module.exports = function(grunt) {
         }
       }
     },
+    handlebars: {
+      compile: {
+        options: {
+          namespace: "JST"
+        },
+        files: {
+          "client/src/js/templates.js": ["views/clientside/*.hbs"]
+        }
+      }
+    },
     watch: {
       scripts: {
-        files: ['client/src/js/*.js', 'client/src/stylesheets/*.less'],
+        files: ['app.js', 'client/src/js/*.js', 'client/src/stylesheets/*.less'],
         tasks: ['jshint', 'less', 'uglify']
       }
     }
@@ -40,9 +57,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
 
-
-  // Default task(s).
-  grunt.registerTask('default', ['jshint', 'less', 'uglify']);
-
+  grunt.registerTask('default', ['less', 'jshint', 'handlebars', 'concat']);
+  grunt.registerTask('build', ['jshint', 'less', 'concat', 'handlebars', 'uglify']);
 };

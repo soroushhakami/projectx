@@ -8,6 +8,11 @@
     </div>
 		{{>footer}}
 	</div>
-	<script src="/build.js"></script>
+	<script>
+		$(document).ready(function() {
+		    StartPage.render();
+		    moment().format();
+		});
+	</script>
 </body>
 

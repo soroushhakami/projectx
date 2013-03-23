@@ -37,12 +37,12 @@ module.exports = function(grunt) {
     cssmin: {
       dist: {
         files: {
-          'client/dist/stylesheets/main.css': ['client/src/stylesheets/*.css']
+          'client/dist/stylesheets/main.css': ['client/src/stylesheets/!(main).css']
         }
       },
       src: {
         files: {
-          'client/src/stylesheets/main.css': ['client/src/stylesheets/*.css']
+          'client/src/stylesheets/main.css': ['client/src/stylesheets/!(main).css']
         }
       }
     },

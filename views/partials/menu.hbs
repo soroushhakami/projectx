@@ -1,35 +1,41 @@
-<div class="masthead">
-	<ul class="nav nav-pills pull-right">
-		{{#if user}}
-			{{#isHome}}
-			<li class="active"><a href="/">Home</a></li>
-			{{else}}
-			<li><a href="/">Home</a></li>
-			{{/isHome}}
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="/">Pairmodoro</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav nav-pills pull-right">
+					{{#if user}}
+					{{#isHome}}
+					<li class="active"><a href="/">Home</a></li>
+					{{else}}
+					<li><a href="/">Home</a></li>
+					{{/isHome}}
 
-			{{#isWork}}
-			<li class="active"><a href="/work">Work</a></li>
-			{{else}}
-			<li><a href="/work">Work</a></li>
-			{{/isWork}}
+					{{#isWork}}
+					<li class="active"><a href="/work">Work</a></li>
+					{{else}}
+					<li><a href="/work">Work</a></li>
+					{{/isWork}}
 
-			{{#isAccount}}
-			<li class="active"><a href="/account">Account</a></li>
-			{{else}}
-			<li><a href="/account">Account</a></li>
-			{{/isAccount}}
-		{{/if}}
-		
+					{{#isAccount}}
+					<li class="active"><a href="/account">Account</a></li>
+					{{else}}
+					<li><a href="/account">Account</a></li>
+					{{/isAccount}}
+					{{/if}}
 
-		{{#if user}}
-			<li><a href="/logout">Logout</a></li>
-			{{else}}
-			{{#isLogin}}
-			<li class="active"><a href="/login">Login</a></li>
-			{{else}}
-			<li><a href="/login">Login</a></li>
-			{{/isLogin}}
-		{{/if}}
-	</ul>
-	<h3 class="muted"><a class="muted" href="/">Pairmodoro</a></h3>
+
+					{{#if user}}
+					<li><a href="/logout">Logout</a></li>
+					{{else}}
+					{{#isLogin}}
+					<li class="active"><a href="/login">Login</a></li>
+					{{else}}
+					<li><a href="/login">Login</a></li>
+					{{/isLogin}}
+					{{/if}}
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
 </div>

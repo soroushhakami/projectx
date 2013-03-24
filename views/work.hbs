@@ -1,18 +1,17 @@
 {{>head}}
 <body>
+	{{>menu}}
 	<div class="container-narrow">
-		{{>menu}}
 		<div class="container">
-        <div id="main_display">
-        </div>
-    </div>
-		{{>footer}}
+			<div id="main_display">
+			</div>
+		</div>
 	</div>
 	<script>
-		$(document).ready(function() {
-		    StartPage.render();
-		    moment().format();
-		});
+	$(document).ready(function() {
+		StartPage.render();
+		moment().format();
+	});
 	</script>
 </body>
 

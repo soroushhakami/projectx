@@ -64,8 +64,8 @@ passport.serializeUser(function(team, done) {
   done(null, team.teamname);
 });
 
-passport.deserializeUser(function(team, done) {
-  db.getTeam(team.teamname, function(err, team) {
+passport.deserializeUser(function(teamname, done) {
+  db.getTeam(teamname, function(err, team) {
     done(err, team);
   });
 });

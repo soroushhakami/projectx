@@ -15,7 +15,8 @@
     "mocha": "*",
     "passport": "*",
     "passport-local": "~0.1.6",
-    "mongoose": "*"
+    "mongoose": "*",
+    "bcrypt": "~0.7.5"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

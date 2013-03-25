@@ -10,12 +10,13 @@ var express = require('express'),
   fs = require('fs'),
   path = require('path'),
   passport = require('passport'),
-  hbs = require('hbs');
-LocalStrategy = require('passport-local').Strategy,
-env = process.env.NODE_ENV || 'development',
-config = require('./lib/config'),
-url = 'http://localhost:' + config.port + '/',
-userApi = require('./lib/user-api');
+  hbs = require('hbs'),
+  db = require('./lib/db'),
+  LocalStrategy = require('passport-local').Strategy,
+  env = process.env.NODE_ENV || 'development',
+  config = require('./lib/config'),
+  url = 'http://localhost:' + config.port + '/',
+  userApi = require('./lib/user-api');
 sessionApi = require('./lib/session-api');
 
 if (process.env.SUBDOMAIN) {
@@ -59,34 +60,38 @@ function findByUsername(username, fn) {
 //   serialize users into and deserialize users out of the session.  Typically,
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
+passport.serializeUser(function(team, done) {
+  done(null, team.teamname);
 });
 
-passport.deserializeUser(function(id, done) {
-  findById(id, function(err, user) {
-    done(err, user);
+passport.deserializeUser(function(team, done) {
+  db.getTeam(team.teamname, function(err, team) {
+    done(err, team);
   });
 });
 
-passport.use(new LocalStrategy(
-
-function(username, password, done) {
-  findByUsername(username, function(err, user) {
+passport.use(new LocalStrategy(function(teamname, password, done) {
+  db.getTeam(teamname, function(err, team) {
     if (err) {
       return done(err);
     }
-    if (!user) {
+    if (!team) {
       return done(null, false, {
-        message: 'Unknown user ' + username
+        message: 'Unknown team ' + teamname
       });
     }
-    if (user.password != password) {
-      return done(null, false, {
-        message: 'Invalid password'
-      });
-    }
-    return done(null, user);
+    team.comparePassword(password, function(err, isMatch) {
+      if (err) {
+        return done(err);
+      }
+      if (isMatch) {
+        return done(null, team);
+      } else {
+        return done(null, false, {
+          message: 'Invalid password'
+        });
+      }
+    });
   });
 }));
 
@@ -144,32 +149,33 @@ filenames.forEach(function(filename) {
 });
 
 hbs.registerHelper('isWork', function(options) {
-    if(this.title == 'Work') {
-      return options.fn(this);
-    } else {
-      return options.inverse(this);
-    }
-  });
+  if (this.title == 'Work') {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
 hbs.registerHelper('isHome', function(options) {
-    if(this.title == 'Home') {
-      return options.fn(this);
-    } else {
-      return options.inverse(this);
-    }
-  });
+  if (this.title == 'Home') {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
 hbs.registerHelper('isAccount', function(options) {
-    if(this.title == 'Account') {
-      return options.fn(this);
-    } else {
-      return options.inverse(this);
-    }
-  });hbs.registerHelper('isLogin', function(options) {
-    if(this.title == 'Login') {
-      return options.fn(this);
-    } else {
-      return options.inverse(this);
-    }
-  });
+  if (this.title == 'Account') {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+hbs.registerHelper('isLogin', function(options) {
+  if (this.title == 'Login') {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

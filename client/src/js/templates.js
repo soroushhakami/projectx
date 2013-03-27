@@ -37,7 +37,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack1 = helpers.userTwo) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.userTwo; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</h1>\n        </div>\n        <h1 class=\"timer\"></h1>\n        <h1 id=\"timerMessage\">Well done, now take a break.</h1>\n        <div class=\"actionbar\">\n            <div class=\"buttons pull-left\">\n                <button class=\"btn btn-large btn-primary\" id=\"changePairBtn\" type=\"button\">Change Pair</button>\n            </div>\n            <div class=\"buttons pull-right\">\n                <button class=\"btn btn-large btn-primary btn-success\" id=\"pomodoroBtn\" type=\"button\">Start Pomodoro</button>\n        <button class=\"btn btn-large btn-primary btn-danger\" id=\"breakBtn\" type=\"button\" disabled=\"disabled\">Take a break</button>\n                </div>\n        </div>";
+    + "</h1>\n        </div>\n        <h1 class=\"timer\"></h1>\n        <h1 id=\"timerMessage\">Well done, now take a break.</h1>\n        <div class=\"actionbar\">\n            <div class=\"buttons pull-left\">\n                <button class=\"btn btn-large btn-primary\" id=\"changePairBtn\" type=\"button\">Change Pair</button>\n            </div>\n            <div class=\"buttons pull-right\">\n                <button class=\"btn btn-large btn-primary btn-success\" id=\"pomodoroBtn\" type=\"button\">Start Pomodoro</button>\n        <button class=\"btn btn-large btn-primary btn-danger\" id=\"breakBtn\" type=\"button\">Take a break</button>\n                </div>\n        </div>";
   return buffer;
   });
 

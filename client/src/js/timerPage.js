@@ -10,28 +10,28 @@ var TimerPage = (function () {
         initEventHandlers();
     };
 
-    var initEventHandlers = function(){
-        $('#pomodoroBtn').click(function(){
+    var initEventHandlers = function () {
+        $('#pomodoroBtn').click(function () {
             Timer.killTimer();
             Notification.closeNotification();
-           TimerPage.render();
+            TimerPage.render();
         });
 
-        $('#breakBtn').click(function(){
+        $('#breakBtn').click(function () {
             Timer.killTimer();
             Notification.closeNotification();
             Timer.startBreak();
         });
 
-        $('#changePairBtn').click(function(){
+        $('#changePairBtn').click(function () {
             Notification.closeNotification();
             Timer.killTimer();
-           StartPage.render();
+            StartPage.render();
         });
     };
 
     return {
-        render:render
+        render: render
     };
 })();
 

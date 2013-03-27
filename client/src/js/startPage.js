@@ -1,6 +1,7 @@
 var StartPage = (function () {
 
     var render = function () {
+        //let's fire it up
         $(document).attr('title', 'Pairmodoro');
         var startHtml = JST['views/clientside/start.hbs']();
         $('#main_display').empty().append(startHtml);

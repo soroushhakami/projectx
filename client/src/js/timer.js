@@ -71,7 +71,6 @@ var Timer = (function () {
 
     var pomodoroDone = function(){
         killTimer();
-        $('#breakBtn').removeAttr('disabled');
         $('#timerMessage').css('visibility','visible').hide().fadeIn('slow');
         Notification.showPomodoroDone();
 
@@ -81,7 +80,6 @@ var Timer = (function () {
 
     var breakDone = function(){
         killTimer();
-        $('#breakBtn').attr('disabled', 'disabled');
         $('#timerMessage').text('Break over, switch driver.').css('visibility','visible').hide().fadeIn('slow');
         startBreakDoneTimer();
         Notification.showBreakDone();

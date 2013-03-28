@@ -10,7 +10,9 @@ lib-cov
 *.DS_STORE
 
 .idea/*
+
 start-dev.sh
+client/dist/js/uglified_src.js
 
 pids
 logs

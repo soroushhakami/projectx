@@ -1,9 +1,16 @@
 <!doctype html>
 <head>
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheets/main.css">
     {{#inDevelopment}}
-        <!-- libraries -->
+        <!-- css libraries -->
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+
+        <!-- css src -->
+        <link rel="stylesheet" href="/stylesheets/lesscompiled.css">
+        <link rel="stylesheet" href="/stylesheets/pairmodoro.css">
+
+        <!-- js libraries -->
         <script src="/js/vendor/jquery.min.js"></script>
         <script src="/js/vendor/countdown.min.js"></script>
         <script src="/js/vendor/handlebars.runtime-1.0.rc.1.min.js"></script>
@@ -13,7 +20,7 @@
         <script src="/js/vendor/morris.min.js"></script>
         <script src="/js/vendor/raphael-min.js"></script>
 
-        <!-- src -->
+        <!-- js src -->
         <script src="/js/notification.js"></script>
         <script src="/js/pair.js"></script>
         <script src="/js/session.js"></script>
@@ -24,6 +31,7 @@
         <script src="/js/timerPage.js"></script>
         <script src="/js/users.js"></script>
     {{else}}
+        <link rel="stylesheet" href="/stylesheets/main.css">
         <script src="/js/build.js"></script>
     {{/inDevelopment}}
 </head>

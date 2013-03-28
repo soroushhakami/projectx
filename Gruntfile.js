@@ -13,7 +13,7 @@ module.exports = function (grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['client/dist/js/uglified_src.js', 'client/src/js/vendor/*.js'],
+                src: ['client/src/js/vendor/*.js', 'client/dist/js/uglified_src.js'],
                 dest: 'client/dist/js/build.js'
             }
         },

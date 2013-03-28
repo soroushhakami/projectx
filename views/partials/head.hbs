@@ -1,7 +1,30 @@
 <!doctype html>
 <head>
-	<title>{{title}}</title>
-	<link rel="stylesheet" href="/stylesheets/main.css">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="/build.js"></script>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    {{#inDevelopment}}
+        <!-- libraries -->
+        <script src="/js/vendor/countdown.min.js"></script>
+        <script src="/js/vendor/handlebars.runtime-1.0.rc.1.min.js"></script>
+        <script src="/js/vendor/jquery.bp.wallpaper.min.js"></script>
+        <script src="/js/vendor/laces.js"></script>
+        <script src="/js/vendor/moment.min.js"></script>
+        <script src="/js/vendor/morris.min.js"></script>
+        <script src="/js/vendor/raphael-min.js"></script>
+
+        <!-- src -->
+        <script src="/js/notification.js"></script>
+        <script src="/js/pair.js"></script>
+        <script src="/js/session.js"></script>
+        <script src="/js/startPage.js"></script>
+        <script src="/js/statsPage.js"></script>
+        <script src="/js/templates.js"></script>
+        <script src="/js/timer.js"></script>
+        <script src="/js/timerPage.js"></script>
+        <script src="/js/users.js"></script>
+
+    {{else}}
+        <script src="/build.js"></script>
+    {{/inDevelopment}}
 </head>

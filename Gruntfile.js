@@ -52,8 +52,12 @@ module.exports = function (grunt) {
                 files: ['client/src/js/*.js', 'views/clientside/*.hbs'],
                 tasks: ['jshint', 'handlebars', 'uglify', 'concat']
             },
-            stylesheets: {
-                files: ['client/src/stylesheets/*.css', 'client/src/stylesheets/*.less'],
+            cssstylesheets: {
+                files: ['client/src/stylesheets/!(main).css'],
+                tasks: ['cssmin']
+            },
+            lessstylesheets: {
+                files: ['client/src/stylesheets/*.less'],
                 tasks: ['less', 'cssmin']
             }
         }

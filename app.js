@@ -5,79 +5,24 @@ var express = require('express'),
     http = require('http'),
     fs = require('fs'),
     path = require('path'),
-    passport = require('passport'),
     hbs = require('hbs'),
     db = require('./lib/db'),
-    LocalStrategy = require('passport-local').Strategy,
     env = process.env.NODE_ENV || 'development',
     config = require('./lib/config'),
     url = 'http://localhost:' + config.port + '/',
-    userApi = require('./lib/user-api');
-sessionApi = require('./lib/session-api');
+    userApi = require('./lib/user-api'),
+    sessionApi = require('./lib/session-api'),
+    teamApi = require('./lib/team-api'),
+    session = require('./lib/session');
 
 if (process.env.SUBDOMAIN) {
     url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
 }
 
-var users = [
-    {
-        id: 1,
-        username: 'avanzapension',
-        password: 'test',
-        email: 'soroush.hakami@gmail.com'
-    },
-    {
-        id: 2,
-        username: 'joe',
-        password: 'birthday',
-        email: 'joe@example.com'
-    }
-];
-
-
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.
-passport.serializeUser(function (team, done) {
-    done(null, team.teamname);
-});
-
-passport.deserializeUser(function (teamname, done) {
-    db.getTeam(teamname, function (err, team) {
-        done(err, team);
-    });
-});
-
-passport.use(new LocalStrategy(function (teamname, password, done) {
-    db.getTeam(teamname, function (err, team) {
-        if (err) {
-            return done(err);
-        }
-        if (!team) {
-            return done(null, false, {
-                message: 'Unknown team ' + teamname
-            });
-        }
-        team.comparePassword(password, function (err, isMatch) {
-            if (err) {
-                return done(err);
-            }
-            if (isMatch) {
-                return done(null, team);
-            } else {
-                return done(null, false, {
-                    message: 'Invalid password'
-                });
-            }
-        });
-    });
-}));
-
 var app = express();
 app.use(userApi);
 app.use(sessionApi);
+app.use(teamApi);
 
 app.configure(function () {
     app.set('port', process.env.PORT || config.port);
@@ -89,8 +34,8 @@ app.configure(function () {
     app.use(express.methodOverride());
     app.use(express.cookieParser('your secret here'));
     app.use(express.session('your secret here'));
-    app.use(passport.initialize());
-    app.use(passport.session());
+    app.use(session.initialize());
+    app.use(session.session());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, env == 'production' ? 'client/dist' : 'client/src')));
 });
@@ -106,7 +51,7 @@ app.get('/account', ensureAuthenticated, routes.account);
 app.get('/login', routes.login);
 
 app.post('/login',
-    passport.authenticate('local', {
+    session.authenticate('local', {
         failureRedirect: '/login'
     }), function (req, res) {
         res.redirect('/work');

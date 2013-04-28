@@ -4,7 +4,7 @@
         "name": "Soroush Hakami",
         "email": "soroush.hakami@gmail.com"
     },
-    "version": "0.1.3-56",
+    "version": "0.1.3-60",
     "scripts": {
         "start": "app.js",
         "test": "mocha"

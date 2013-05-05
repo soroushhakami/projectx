@@ -54,12 +54,11 @@ app.get('/account', ensureAuthenticated, routes.account);
 
 app.get('/login', routes.login);
 
-app.post('/login',
-    session.authenticate('local', {
-        failureRedirect: '/login'
-    }), function (req, res) {
-        res.redirect('/work');
-    });
+app.post('/login', session.authenticate('local', {
+    failureRedirect: '/login'
+}), function (req, res) {
+    res.redirect('/work');
+});
 
 app.get('/logout', routes.logout);
 
